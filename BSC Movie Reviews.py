@@ -1,20 +1,4 @@
-# Zane Mazor-Brown
-# Professor Zhan
-# BUS 498-02
-# 4 May 2022
-
-# Individual Assignment #1
-
 import os
-
-# I tried to incorporate more methods learned in class (especially in the
-# preprocessing step) but found they made my program take way too long to
-# execute. Hopefully my more vanilla approach to this assignment is
-# satisfactory.
-
-# Step #1 – Create a list of positive words, for example, [“good”, “exciting”,
-#           “interesting”, (etc.)], and a list of negative words, for example,
-#           [“terrible”, “boring”, “bad”, (etc.)]
 
 # list of positive descriptor words - mostly derived from a thesaurus
 pos_words = ["good", "exciting", "interesting", "excellent", "superb", 
@@ -45,8 +29,6 @@ neg_words = ["bad", "terrible", "boring", "awful", "negative", "poor",
              "unbearable", "agonizing", "hate", "hated", "disliked", "cryptic",
              "avoid", "worthless", "bummer", "failed", "failure", "badly"]
 
-# Step #2 – Read a text file from the folder “./aclImdb/train/pos”
-
 # store directory locations for ease of use
 pos_dir = "/Users/zanemazorbrown/Desktop/BUS 498 - Zhan/aclImdb/train/pos"
 neg_dir = "/Users/zanemazorbrown/Desktop/BUS 498 - Zhan/aclImdb/train/neg"
@@ -57,7 +39,7 @@ def read_text(file_name, dir):
     file = open(file_location, "r")
     return file
 
-# Step #3 - Do necessary preprocessings
+# Preprocessing
 
 # funcion to remove punctuation from each word in a file and add to list as LC
 def preprocess(file_name, dir):
@@ -73,10 +55,6 @@ def preprocess(file_name, dir):
     # close file to free up resources
     file.close()
     return word_list
-
-# Step #4 - Count the frequency of positive words and negative words, using the
-#           pre-definied positive word list and the negative word list. (Maybe
-#           you need to use regular expressions)
 
 # function to count the number of positive and negative words in a text file
 def pos_neg_freq(pos_words, neg_words, file_name, dir):
@@ -96,9 +74,6 @@ def pos_neg_freq(pos_words, neg_words, file_name, dir):
             neg_count += 1
     return pos_count, neg_count
 
-# Step #5 - Use a certain rule to determine the sentiment of the document. For
-#           example (develop your own rules if possible),
-
 # function to label a file as positive or negative given pos/neg frequencies
 def label_review(pos_words, neg_words, file_name, dir):
     pos_freq, neg_freq = pos_neg_freq(pos_words, neg_words, file_name, dir)
@@ -109,16 +84,11 @@ def label_review(pos_words, neg_words, file_name, dir):
     # negative label is -1
     else:
         label = -1
-    # return label as a string -> can add "\n" when writing to file in step #9
+    # return label as a string -> can add "\n" when writing to file
     return str(label)
-
-# Step #6 - Record your label in a list, or a dictionary.
 
 # create an empty list to append label outcomes to when iterating
 rev_labels = []
-
-# Step #7 - Find the next file in the folder “./aclImdb/train/pos”, repeat
-#           steps 3-6
 
 # create list of file names from the pos directory
 pos_file_list = os.listdir(pos_dir)
@@ -127,18 +97,12 @@ for file in pos_file_list:
     label = label_review(pos_words, neg_words, file, pos_dir)
     rev_labels.append(label)
 
-# Step #8 - Find all the file in the folder “./aclImdb/train/neg”, for each of
-#           them, repeat steps 3-6 
-
 # create list of file names from the pos directory
 neg_file_list = os.listdir(neg_dir)
 # iterate through each neg file and append file label to the review labels list
 for file in neg_file_list:
     label = label_review(pos_words, neg_words, file, neg_dir)
     rev_labels.append(label)
-
-# Step #9 - Save your labels in a txt file, or a csv file, or a sqlite3 
-#           database.
 
 # try opening with "x" mode - creates a text file if file name doesn't exist
 label_file_name = "BUS 498 - Assignment #1 Labels"
@@ -148,7 +112,6 @@ try:
 except:
     label_file = open(label_file_name, "w")
 
-
 # iterate through the review labels list and write to file with a line break
 for label in rev_labels:
     label_file.write(label + "\n")
@@ -156,7 +119,7 @@ for label in rev_labels:
 # close label file
 label_file.close()
 
-# Step #10 - Report your labeling accuracy.
+# Report your labeling accuracy.
 
 # function to count the number of pos/neg reviews in the label list
 def count_labels(lst):
