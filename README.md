@@ -1,0 +1,2 @@
+# Binary-Sentiment-Classification-of-Movie-Reviews
+A naïve sentiment analyzer for binary classification of movie reviews. This model uses lists of positive and negative words to determine the sentiment of individual reviews based on frequency of instances. With the current positive/negative word bank, the model has an accuracy of 88.54%. The dataset file can be found at https://ai.stanford.edu/~amaas/data/sentiment/ (510 MB uncompressed).
